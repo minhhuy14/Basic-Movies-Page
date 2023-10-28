@@ -2,9 +2,19 @@ export default{
     name:'Header',
     data(){
         return {
+            darkMode: false
         };
     },
     methods:{
+        toggleDarkMode(){
+            this.darkMode = !this.darkMode;
+            if (this.darkMode) {
+                document.body.setAttribute('data-bs-theme','dark');
+            }
+            else {
+                document.body.removeAttribute('data-bs-theme');    
+            }
+        }
     },
     template:`
         <div id="header">
