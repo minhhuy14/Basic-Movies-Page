@@ -46,11 +46,13 @@ body{
 .navbar{
     border-radius: 4px;
 }
-
-.main-container{
-    height: 400px;
-}
-
-.carousel-slide{
-    height: 100%;
+.footer{
+    border-radius: 4px;
+    background: var(--bs-body-bg);
+    height: 2em;
+    text-align: center;
+    color: #ccc;
+    font-style: italic;
+    line-height: 2em;
+    font-weight: 600;
 }
