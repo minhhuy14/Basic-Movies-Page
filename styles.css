@@ -46,3 +46,11 @@ body{
 .navbar{
     border-radius: 4px;
 }
+
+.main-container{
+    height: 400px;
+}
+
+.carousel-slide{
+    height: 100%;
+}
