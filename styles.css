@@ -1,0 +1,45 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    
+}
+body{
+    /* height: 100vh; */
+    margin: 0 auto;
+    background: #c3c7c4; 
+    max-width: 1200px;
+}
+
+#header{
+    height: 4em;
+    text-align: center;
+    border-radius: 4px;
+    background: var(--bs-body-bg);
+    margin-bottom: 8px;
+    margin-top: 4px;
+    margin-left: 1px;
+    margin-right: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.api-info{
+    position: absolute;
+    top: 4px;
+    right: 10px;
+}
+
+.switch-button{
+    position: absolute;
+    bottom: 4px;
+    right: 4px;
+}
+
+.id-student-info{
+    position: absolute;
+
+    left: 4px;
+}
