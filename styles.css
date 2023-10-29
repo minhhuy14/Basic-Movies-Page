@@ -49,19 +49,22 @@ body{
 .footer{
     border-radius: 4px;
     background: var(--bs-body-bg);
-    height: 2em;
+    height: 3em;
     text-align: center;
     color: #ccc;
     font-style: italic;
-    line-height: 2em;
+    line-height: 3em;
     font-weight: 600;
+    margin-top: 10px;
 }
 
 .top-movies-item{
-    height: 400px;
+      
 }
 .top-movies-img{
+   width: 400px;
     margin: 0 auto;
+    display: block;
 }
 
 .top-movies-caption{
@@ -72,9 +75,55 @@ body{
     margin-bottom: 8px;
 }
 
-.popular-movies-styles{
-    width: auto;
-    height: 200px;
+.movies-styles{
+    height: 300px;
     object-fit: cover;
 }
+.movie-item-box{
+    display: flex;
+    justify-content: space-evenly;
+
+}
+
+.indicator-style{
+    right: -2em;
+    left: auto;
+    bottom: auto;
+    top: -26px;
+}
+
+.movie-item-box img{
+    transition: transform .4s;
+    display: block;
+}
+
+.zoom-onhover:hover{
+    transform: scale(1.5); 
+}
+
+.detail-info{
+    display: flex;
+}
+.detail-img{
+    width: 400px;
+    height: 300px;
+    object-fit: cover;
+    display: block;
+    margin: 0 10px;
+
+}
+
+.detail-info h3{
+    margin: 0 auto;
+}
+
+.detail-content{
+    padding-left: 20px;
+}
+
+.actor-box{
+    display: block;
+    width: 100%;
+}
+
 

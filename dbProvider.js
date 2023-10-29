@@ -100,15 +100,42 @@ export function fetch(queryInfo) {
                 try {
                     if (classInfo=='movie')
                     {
-                    for (let i=0; i<Movies.Movies.length; i++)
-                    {
-                        let movie=Movies.Movies[i];
-                        if (movie.id.toLowerCase().search(pattern)!=-1)
+                        let found=false;
+                        for (let i=0; i<Movies.Movies.length; i++)
                         {
-                           objResult.item=movie;
+                            let movie=Movies.Movies[i];
+                            if (movie.id.toLowerCase().search(pattern)!=-1)
+                            {
+                            objResult.item=movie;
+                            found=true;
+                            break;
+                            }
+                            
                         }
-                        
-                    }
+                        if (found==false){
+                            for (let i=0; i<Movies.MostPopularMovies.length; i++)
+                            {
+                                let movie=Movies.MostPopularMovies[i];
+                            if (movie.id.toLowerCase().search(pattern)!=-1)
+                            {
+                                objResult.item=movie;
+                                found=true;
+                                break;
+                            } 
+                            }
+                        }
+                        if (found==false){
+                            for (let i=0; i<Movies.Top50Movies.length; i++)
+                            {
+                                let movie=Movies.Top50Movies[i];
+                            if (movie.id.toLowerCase().search(pattern)!=-1)
+                            {
+                                objResult.item=movie;
+                                found=true;
+                                break;
+                            } 
+                            }
+                        }
                      }
                     if (classInfo=='name')
                     {

@@ -2,6 +2,7 @@ import { fetch } from './dbProvider.js';
 
 export default{
     name:'Main',
+    props:['showDetailMovie'],
     data(){
         return {
           topBoxOfficeMovies:[],
@@ -23,6 +24,8 @@ export default{
         fetch('get/topboxoffice/?per_page=5&page=1')
           .then(result =>{
               this.topBoxOfficeMovies=result.items;
+              console.log('Top office: ');
+              console.log(this.topBoxOfficeMovies);
           });
         
         fetch('get/mostpopular/?per_page=3&page=1')
@@ -42,54 +45,59 @@ export default{
         
     },
     template:`
-  <div id="carouselExampleCaptions" class="carousel slide">
+  <div id="topMoviesIndicator" class="carousel slide">
     <div class="carousel-indicators">
       <button v-for="(movie, index) in topBoxOfficeMovies" :key="index" type="button"
-        data-bs-target="#carouselExampleCaptions" :data-bs-slide-to="index" :class="{ active: index === 0 }"
+        data-bs-target="#topMoviesIndicator" :data-bs-slide-to="index" :class="{ active: index === 0 }"
         :aria-label="'Movie ' + (index + 1)" :aria-current="index === 0"></button>
     </div>
     <div class="carousel-inner">
-      <div v-for="(movie, index) in topBoxOfficeMovies" :key="index" class="carousel-item top-movies-item"
-        :class="{ active: index === 0 }">
-        <img :src="movie.image" class="d-block w-50 top-movies-img" alt="...">
+      <div v-for="(movie, index) in topBoxOfficeMovies" 
+        :key="index" 
+        class="carousel-item top-movies-item"
+        :class="{ active: index === 0 }"
+        @click=showDetailMovie(movie.id)>
+        <img :src="movie.image" class="d-block top-movies-img" alt="...">
         <div class="carousel-caption d-none d-md-block top-movies-caption">
           <h5>{{ movie.title }}</h5>
           <p>{{ movie.year }}</p>
         </div>
       </div>
     </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+    <button class="carousel-control-prev" type="button" data-bs-target="#topMoviesIndicator" data-bs-slide="prev">
       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Previous</span>
     </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+    <button class="carousel-control-next" type="button" data-bs-target="#topMoviesIndicator" data-bs-slide="next">
       <span class="carousel-control-next-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Next</span>
     </button>
   </div>
   <div class="popular-movies">
     <h5>Most Popular</h5>
-    <div id="carouselExampleIndicators2" class="carousel slide" style="height: 40%;">
-      <div class="carousel-indicators">
-        <button v-for="(movie, index) in 5" :key="index" type="button" data-bs-target="#carouselExampleIndicators2"
+    <div id="popularIndicator" class="carousel slide" style="height: 40%;">
+      <div class="carousel-indicators indicator-style">
+        <button v-for="(movie, index) in 5" :key="index" type="button" data-bs-target="#popularIndicator"
           :data-bs-slide-to="index" :class="{ active: index === 0 }" :aria-label="'Movie ' + (index + 1)"
           :aria-current="index === 0"></button>
       </div>
       <div class="carousel-inner">
-        <div v-for="(group, index) in chunk(top15PopularMovies, 3)" :key="index" class="carousel-item"
+        <div v-for="(group, index) in chunk(top15PopularMovies, 3)" 
+          :key="index" class="carousel-item"
           :class="{ active: index === 0 }">
-          <div class="d-flex justify-content-around">
-            <div v-for="movie in group" class="p-2 flex-fill">
-              <img :src="movie.image" class="d-block w-50 popular-movies-styles" alt="...">
-            </div>
+          <div class="movie-item-box">
+          <div v-for="movie in group">
+              <img :src="movie.image" class="d-block movies-styles zoom-onhover" alt="..."
+              @click=showDetailMovie(movie.id)>
+          </div>
           </div>
         </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators2"
+        <button class="carousel-control-prev" type="button" data-bs-target="#popularIndicator"
           data-bs-slide="prev">
           <span class="carousel-control-prev-icon" aria-hidden="true"></span>
           <span class="visually-hidden">Previous</span>
         </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators2"
+        <button class="carousel-control-next" type="button" data-bs-target="#popularIndicator"
           data-bs-slide="next">
           <span class="carousel-control-next-icon" aria-hidden="true"></span>
           <span class="visually-hidden">Next</span>
@@ -99,27 +107,27 @@ export default{
   </div>
   <div class="top-rating-movies">
     <h5>Top Rating</h5>
-    <div id="carouselExampleIndicators3" class="carousel slide" style="height: 40%;">
-      <div class="carousel-indicators">
-        <button v-for="(movie, index) in 5" :key="index" type="button" data-bs-target="#carouselExampleIndicators3"
+    <div id="topRatingIndicator" class="carousel slide" style="height: 40%;">
+      <div class="carousel-indicators indicator-style">
+        <button v-for="(movie, index) in 5" :key="index" type="button" data-bs-target="#topRatingIndicator"
           :data-bs-slide-to="index" :class="{ active: index === 0 }" :aria-label="'Movie ' + (index + 1)"
           :aria-current="index === 0"></button>
       </div>
       <div class="carousel-inner">
         <div v-for="(group, index) in chunk(top15RatingMovies, 3)" :key="index" class="carousel-item"
           :class="{ active: index === 0 }">
-          <div class="d-flex justify-content-around">
-            <div v-for="movie in group" class="p-2 flex-fill">
-              <img :src="movie.image" class="d-block w-50 popular-movies-styles" alt="...">
+          <div class="movie-item-box">
+            <div v-for="movie in group">
+              <img :src="movie.image" class="d-block movies-styles" alt="...">
             </div>
           </div>
         </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators3"
+        <button class="carousel-control-prev" type="button" data-bs-target="#topRatingIndicator"
           data-bs-slide="prev">
           <span class="carousel-control-prev-icon" aria-hidden="true"></span>
           <span class="visually-hidden">Previous</span>
         </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators3"
+        <button class="carousel-control-next" type="button" data-bs-target="#topRatingIndicator"
           data-bs-slide="next">
           <span class="carousel-control-next-icon" aria-hidden="true"></span>
           <span class="visually-hidden">Next</span>

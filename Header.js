@@ -6,15 +6,20 @@ export default{
         };
     },
     methods:{
-        toggleDarkMode(){
-            this.darkMode = !this.darkMode;
-            if (this.darkMode) {
-                document.body.setAttribute('data-bs-theme','dark');
+            toggleDarkMode(){
+                this.darkMode = !this.darkMode;
+                this.applyDarkMode();
+            },
+            applyDarkMode() {
+                if (this.darkMode) {
+                    document.body.setAttribute('data-bs-theme','dark');
+                    document.body.style.background = '#000';
+                }
+                else {
+                    document.body.removeAttribute('data-bs-theme');
+                    document.body.style.background = '#c3c7c4';
+                }
             }
-            else {
-                document.body.removeAttribute('data-bs-theme');    
-            }
-        }
     },
     template:`
         <div id="header">
