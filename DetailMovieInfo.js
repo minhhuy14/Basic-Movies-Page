@@ -16,7 +16,7 @@ export default{
         
     },
     template:`
-            <div class="detail-info">
+            <div class="main-movie-content">
             <img :src = this.selectedMovie.item.image class="detail-img">
             <div class="detail-content">
             <h3> {{this.selectedMovie.item.title}} </h3><br>
@@ -42,6 +42,10 @@ export default{
             <div class="actor-box">
             <h5>Genres</h5>
             <li v-for="it in this.selectedMovie.item.genreList">{{it.value}}</li>
+            </div>
+            </div>
+            </div>
+            <div class="addtion-content">
             <h5>Actor List</h5>
             <table class="table table-bordered border-primary">
             <thead class="table-dark">

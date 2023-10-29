@@ -102,15 +102,14 @@ body{
     transform: scale(2); 
 }
 
-.detail-info{
+.main-movie-content{
     display: flex;
 }
 .detail-img{
-    width: 400px;
-    height: 300px;
+    width: 350px;
     object-fit: cover;
     display: block;
-    margin: 0 10px;
+    margin-bottom: 12px;
 
 }
 
@@ -118,8 +117,8 @@ body{
     position: relative;
 }
 
-.detail-info h3{
-    margin: 0 auto;
+.detail-content h3{
+    text-align: center;
 }
 
 .detail-content{
@@ -141,4 +140,8 @@ body{
     right: 0;
     text-align: center;
     transform: translateY(50%);
+}
+.addition-content{
+    display: block;
+    width: 100%;
 }
