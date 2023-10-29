@@ -1,53 +1,52 @@
+import { fetch } from './dbProvider.js';
+
 export default{
     name:'Main',
     data(){
-        return {};
+        return {
+          topBoxOfficeMovies:[],
+          mostPopularMovies:[],
+          top15PopularMovies:[],
+        };
+    },
+    methods:{
+      chunk(array, size) {
+        return Array.from({ length: Math.ceil(array.length / size) }, (v, i) =>
+            array.slice(i * size, i * size + size)
+        );
+    },
+    },
+    created()
+    {
+        fetch('get/topboxoffice/?per_page=5&page=1')
+          .then(result =>{
+              this.topBoxOfficeMovies=result.items;
+          });
+        
+        fetch('get/mostpopular/?per_page=3&page=1')
+          .then(popularresult =>{
+              this.mostPopularMovies=popularresult.items;
+              this.top15PopularMovies=this.mostPopularMovies.slice(0,15);
+              console.log('Popular: ');
+              console.log(this.top15PopularMovies);
+          });
+        
     },
     template:`
     <div id="carouselExampleCaptions" class="carousel slide">
     <div class="carousel-indicators">
-      <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-label="Slide 1" aria-current="true"></button>
-      <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2" class=""></button>
-      <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3" class=""></button>
-      <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="3" aria-label="Slide 4" class=""></button>
-      <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="4" aria-label="Slide 5" class=""></button>
+      <button v-for="(movie, index) in topBoxOfficeMovies" :key="index" type="button" data-bs-target="#carouselExampleCaptions" 
+        :data-bs-slide-to="index" :class="{ active: index === 0 }" :aria-label="'Movie ' + (index + 1)" 
+        :aria-current="index === 0"></button>
     </div>
     <div class="carousel-inner">
-      <div class="carousel-item active">
-        <svg class="bd-placeholder-img bd-placeholder-img-lg d-block w-100" width="800" height="400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: First slide" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"></rect><text x="50%" y="50%" fill="#555" dy=".3em">First slide</text></svg>
-        <div class="carousel-caption d-none d-md-block">
-          <h5>First slide label</h5>
-          <p>Some representative placeholder content for the first slide.</p>
+      <div v-for="(movie, index) in topBoxOfficeMovies" :key="index" class="carousel-item top-movies-item" :class="{ active: index === 0 }">
+         <img :src="movie.image" class="d-block w-50 top-movies-img" alt="...">
+         <div class="carousel-caption d-none d-md-block top-movies-caption">
+            <h5>{{ movie.title }}</h5>
+            <p>{{ movie.year }}</p>
         </div>
       </div>
-      <div class="carousel-item">
-        <svg class="bd-placeholder-img bd-placeholder-img-lg d-block w-100" width="800" height="400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Second slide" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#666"></rect><text x="50%" y="50%" fill="#444" dy=".3em">Second slide</text></svg>
-        <div class="carousel-caption d-none d-md-block">
-          <h5>Second slide label</h5>
-          <p>Some representative placeholder content for the second slide.</p>
-        </div>
-      </div>
-      <div class="carousel-item">
-        <svg class="bd-placeholder-img bd-placeholder-img-lg d-block w-100" width="800" height="400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Third slide" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#555"></rect><text x="50%" y="50%" fill="#333" dy=".3em">Third slide</text></svg>
-        <div class="carousel-caption d-none d-md-block">
-          <h5>Third slide label</h5>
-          <p>Some representative placeholder content for the third slide.</p>
-        </div>
-      </div>
-      <div class="carousel-item">
-      <svg class="bd-placeholder-img bd-placeholder-img-lg d-block w-100" width="800" height="400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Third slide" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#555"></rect><text x="50%" y="50%" fill="#333" dy=".3em">Third slide</text></svg>
-      <div class="carousel-caption d-none d-md-block">
-        <h5>Third slide label</h5>
-        <p>Some representative placeholder content for the third slide.</p>
-      </div>
-    </div>
-    <div class="carousel-item">
-    <svg class="bd-placeholder-img bd-placeholder-img-lg d-block w-100" width="800" height="400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Third slide" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#555"></rect><text x="50%" y="50%" fill="#333" dy=".3em">Third slide</text></svg>
-    <div class="carousel-caption d-none d-md-block">
-      <h5>Third slide label</h5>
-      <p>Some representative placeholder content for the third slide.</p>
-    </div>
-  </div>
     </div>
     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -60,50 +59,20 @@ export default{
   </div>
   <div class="popular-movies">
   <h5>Most Popular</h5>
-  <div id="carouselExampleIndicators2" class="carousel slide" style="height: 40%;">
-  <div class="carousel-indicators indicators">
-  <button type="button" data-bs-target="#carouselExampleIndicators2" data-bs-slide-to="0" class="active" aria-label="Slide 1" aria-current="true"></button>
-  <button type="button" data-bs-target="#carouselExampleIndicators2" data-bs-slide-to="1" aria-label="Slide 2" class=""></button>
-  <button type="button" data-bs-target="#carouselExampleIndicators2" data-bs-slide-to="2" aria-label="Slide 3" class=""></button>
-  <button type="button" data-bs-target="#carouselExampleIndicators2" data-bs-slide-to="3" aria-label="Slide 4" class=""></button>
-  <button type="button" data-bs-target="#carouselExampleIndicators2" data-bs-slide-to="4" aria-label="Slide 5" class=""></button>
-</div>
+    <div class="carousel-indicators">
+      <button v-for="(movie, index) in 5" :key="index" type="button" data-bs-target="#carouselExampleCaptions" 
+    :data-bs-slide-to="index" :class="{ active: index === 0 }" :aria-label="'Movie ' + (index + 1)" 
+    :aria-current="index === 0"></button>
+    </div>
     <div class="carousel-inner">
-      <div class="carousel-item active">
-        <div class="d-flex">
-          <div class="p-2 flex-fill">Item 1</div>
-          <div class="p-2 flex-fill">Item 2</div>
-          <div class="p-2 flex-fill">Item 3</div>
+    <div v-for="(group, index) in chunk(top15PopularMovies, 3)" :key="index" class="carousel-item" :class="{ active: index === 0 }">
+    <div class="d-flex">
+        <div v-for="movie in group" class="p-2 flex-fill ">
+            <img :src="movie.image" class="d-block w-50 popular-movies-styles" alt="...">
         </div>
-      </div>
-      <div class="carousel-item">
-        <div class="d-flex">
-          <div class="p-2 flex-fill">Item 4</div>
-          <div class="p-2 flex-fill">Item 5</div>
-          <div class="p-2 flex-fill">Item 6</div>
-        </div>
-      </div>
-      <div class="carousel-item">
-        <div class="d-flex">
-          <div class="p-2 flex-fill">Item 7</div>
-          <div class="p-2 flex-fill">Item 8</div>
-          <div class="p-2 flex-fill">Item 9</div>
-        </div>
-      </div>
-      <div class="carousel-item">
-        <div class="d-flex">
-          <div class="p-2 flex-fill">Item 10</div>
-          <div class="p-2 flex-fill">Item 11</div>
-          <div class="p-2 flex-fill">Item 12</div>
-        </div>
-      </div>
-      <div class="carousel-item">
-        <div class="d-flex">
-          <div class="p-2 flex-fill">Item 13</div>
-          <div class="p-2 flex-fill">Item 14</div>
-          <div class="p-2 flex-fill">Item 15</div>
-        </div>
-      </div>
+    </div>
+</div>
+    </div>
     </div>
     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators2" data-bs-slide="prev">
       <span class="carousel-control-prev-icon" aria-hidden="true"></span>

@@ -2,15 +2,7 @@
 import Movies from './db/data.js';
 
 // Define the DB provider module
-export default {
-    data: function() {
-        return {
-            Movies,
-        }
-    },
-
-    methods: {
-        fetch: function(queryInfo) {
+export function fetch(queryInfo) {
             return new Promise((resolve, reject) => {
             
             console.log(queryInfo);
@@ -169,8 +161,8 @@ export default {
                     }
                     }
                     else if (classInfo=='topboxoffice'){
-                        this.sortByRevenue(Movies.Movies);
-                        for (let i=0;i<10;i++)
+                        sortByRevenue(Movies.Movies);
+                        for (let i=0;i<5;i++)
                         {   
                             objResult.items.push(Movies.Movies[i]);
                             objResult.total += 1;
@@ -185,23 +177,18 @@ export default {
                 
             }
             })
-        },
+        }
 
-        showData: function() {
-            console.log(Movies);
-            const result=this.fetch('get/topboxoffice/?per_page=15&page=1');
-            console.log('Result ');
-            console.log(result);
-        },
-        sortByRevenue: function(list){
+//         
+export function sortByRevenue(list){
             list.sort((a, b) => {
                 const grossA = a.boxOffice.cumulativeWorldwideGross ? parseInt(a.boxOffice.cumulativeWorldwideGross.replace('$', '').replace(/,/g, '')) : a.boxOffice.grossUSA ? parseInt(a.boxOffice.grossUSA.replace('$', '').replace(/,/g, '')) : 0;
                 const grossB = b.boxOffice.cumulativeWorldwideGross ? parseInt(b.boxOffice.cumulativeWorldwideGross.replace('$', '').replace(/,/g, '')) : b.boxOffice.grossUSA ? parseInt(b.boxOffice.grossUSA.replace('$', '').replace(/,/g, '')) : 0;
                 return grossB - grossA;
             })
         }
-    },
-    template: `
-    <button type = "button" @click = "showData">Click me</button>
-    `,
-};
+//     },
+//     template: `
+//     <button type = "button" @click = "showData">Click me</button>
+//     `,
+// };

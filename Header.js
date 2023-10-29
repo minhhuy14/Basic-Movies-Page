@@ -24,5 +24,7 @@ export default{
         <div class="form-check form-switch switch-button">
         <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked"  @change="toggleDarkMode">
         <label class="form-check-label" for="flexSwitchCheckChecked">Dark mode</label>
+        </div>
+        </div>
     `
 }

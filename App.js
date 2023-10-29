@@ -3,7 +3,9 @@ import Footer from './Footer.js';
 import Nav from './Nav.js';
 import Main from './Main.js';
 
-import DBProvider from './dbProvider.js';
+import Movies from './db/data.js';
+
+import {fetch} from './dbProvider.js';
 
 export default {
     name: 'App',
@@ -17,23 +19,23 @@ export default {
         Nav,
         Main,
         Footer,
-        DBProvider
     },
     methods:{
+        showData: function() {
+                        console.log(Movies);
+                        const result=fetch('get/top50/?per_page=15&page=1');
+                        console.log('Result ');
+                        console.log(result);
+                    }
+        },
+
+    created(){
+        this.showData();
     },
     template:`
         <Header/>
         <Nav/>
         <Main />
         <Footer/>
-        <DBProvider />
-    `,
-//     mounted(){
-//         const searchResults = Movies[0].id;
-// console.log(searchResults);
-
-// // Get details of the movie with id 'tt0012349'
-// const movieDetails = Movies.getDetails('tt0012349');
-// console.log(movieDetails);
-//     }
+    `
 }
