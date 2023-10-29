@@ -17,6 +17,7 @@ export default {
         return {
             selectedMovie:null,
             selectedActor:null,
+            isLoading: false,
         };
     },
    
@@ -36,17 +37,20 @@ export default {
         showDetailMovie(movieId){
             console.log('Show detail:');
             console.log(movieId);
-
+            this.isLoading = true;
            fetch(`detail/movie/${movieId}`)
            .then(
-                mv => this.selectedMovie=mv
+                mv => {
+                    this.selectedMovie=mv;
+                    this.isLoading = false;
+                }
             );
 
         },
         showDetailActor(actorId){
             console.log('Show detail Actor:');
             console.log(actorId);
-
+            this.isLoading = true;
            fetch(`detail/name/${actorId}`)
            .then(
                
@@ -54,6 +58,7 @@ export default {
                     this.selectedActor=actor.item;
                     console.log('Actorr');
                     console.log(actor);
+                    this.isLoading = false;
                 }
             );
 
@@ -64,10 +69,13 @@ export default {
     },
     template:`
         <Header/>
-        <Nav/>
-        <Main v-if="!selectedMovie&&!selectedActor" :showDetailMovie="showDetailMovie"/>
-        <DetailMovieInfo :selectedMovie="selectedMovie" :showDetailActor="showDetailActor" v-if="selectedMovie&&!selectedActor"/>
-        <DetailActorInfo :selectedActor="selectedActor" v-if="selectedActor"/>
+        <Nav @goHome="selectedMovie=null,selectedActor=null"/>
+        <div v-if="isLoading">Loading Infomation...</div>
+        <div v-else>
+            <Main v-if="!selectedMovie&&!selectedActor" :showDetailMovie="showDetailMovie"/>
+            <DetailMovieInfo :selectedMovie="selectedMovie" :showDetailActor="showDetailActor" v-if="selectedMovie&&!selectedActor"/>
+            <DetailActorInfo :selectedActor="selectedActor" v-if="selectedActor"/>
+        </div>
         <Footer/>
     `
 }

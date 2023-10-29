@@ -5,13 +5,16 @@ export default{
     data()
     {
         return {
-           clickedActor:null
+           clickedActor:null,
+           isLoading:false,
         }
     },
     methods:{
         onClickedActor(idActor){
+            this.isLoading = true;
             clickedActor = idActor;
-        }
+            this.isLoading = false;
+        },
     },
     created(){
         console.log('Selected Movie:');
@@ -20,7 +23,8 @@ export default{
         
     },
     template:`
-            <div class="main-movie-content">
+            <div v-if="isLoading">Loading Information...</div>
+            <div v-else class="main-movie-content">
             <img :src = this.selectedMovie.item.image class="detail-img">
                 <div class="detail-content">
                 <h3> {{this.selectedMovie.item.title}} </h3><br>

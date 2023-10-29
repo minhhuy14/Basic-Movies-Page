@@ -7,6 +7,9 @@ export default {
     },
 
     methods: {
+      goHome(){
+        this.$emit('goHome');
+        }
       },
     template: `
       <nav class="navbar navbar-expand-lg bg-body-tertiary">
