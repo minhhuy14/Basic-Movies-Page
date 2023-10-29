@@ -28,9 +28,7 @@ export default {
     methods:{
         showData: function() {
                         console.log(Movies);
-                        const result=fetch('get/top50/?per_page=15&page=1');
-                        console.log('Result ');
-                        console.log(result.get);
+                        const result=fetch('detail/movie/tt0099685');
         },
         showDetailMovie(movieId){
             console.log('Show detail:');
@@ -38,10 +36,9 @@ export default {
 
            fetch(`detail/movie/${movieId}`)
            .then(
-                mv => this.selectedMovie=mv.item
+                mv => this.selectedMovie=mv
             );
 
-            console.log(this.selectedMovie);
         },
     },
     created(){

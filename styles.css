@@ -78,6 +78,7 @@ body{
 .movies-styles{
     height: 300px;
     object-fit: cover;
+   
 }
 .movie-item-box{
     display: flex;
@@ -113,6 +114,10 @@ body{
 
 }
 
+.item-movie{
+    position: relative;
+}
+
 .detail-info h3{
     margin: 0 auto;
 }
@@ -128,6 +133,12 @@ body{
 
 
 .popular-movies-caption{
-    z-index: 10;
     color: #fff !important;
+    position: absolute;
+    z-index: 1;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    transform: translateY(50%);
 }

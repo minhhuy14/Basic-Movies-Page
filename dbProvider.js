@@ -96,6 +96,7 @@ export function fetch(queryInfo) {
                 objResult = {
                     id:pattern,
                     item:{},
+                    reviewsInfo:[]
                 };
                 try {
                     if (classInfo=='movie')
@@ -136,7 +137,20 @@ export function fetch(queryInfo) {
                             } 
                             }
                         }
-                     }
+                        //Tìm kiếm trên reviewsList để lấy review cho movie
+                        for (let i=0;i<Movies.Reviews.length;i++)
+                        {
+                            let rv=Movies.Reviews[i];
+                            if (rv.movieId.toLowerCase().search(pattern)!=-1)
+                            {
+                                objResult.reviewsInfo=rv.items;
+                                break;
+                            }
+                        }
+                    console.log('Get reviews: ');
+                    console.log(objResult);
+
+                    }
                     if (classInfo=='name')
                     {
                         for (let i=0; i<Movies.Names.length; i++)

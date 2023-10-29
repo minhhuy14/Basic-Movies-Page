@@ -90,12 +90,14 @@ export default{
           :key="index" class="carousel-item"
           :class="{ active: index === 0 }">
           <div class="movie-item-box">
-          <div v-for="movie in group">
+          <div v-for="movie in group" class="item-movie">
               <img :src="movie.image" class="d-block movies-styles zoom-onhover" alt="..."
               @click=showDetailMovie(movie.id) @mouseover="onHover(movie.id)" @mouseleave="onHover(null)">
               <div class="d-none d-md-block popular-movies-caption" v-if="this.hoveredID==movie.id">
                   <h5>{{ movie.title }}</h5>
                   <p>{{ movie.year }}</p>
+              /div>
+          </div>
           </div>
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#popularIndicator"
@@ -123,10 +125,15 @@ export default{
         <div v-for="(group, index) in chunk(top15RatingMovies, 3)" :key="index" class="carousel-item"
           :class="{ active: index === 0 }">
           <div class="movie-item-box">
-            <div v-for="movie in group">
-              <img :src="movie.image" class="d-block movies-styles" alt="...">
+          <div v-for="movie in group" class="item-movie">
+            <img :src="movie.image" class="d-block movies-styles zoom-onhover" alt="..."
+            @click=showDetailMovie(movie.id) @mouseover="onHover(movie.id)" @mouseleave="onHover(null)">
+            <div class="d-none d-md-block popular-movies-caption" v-if="this.hoveredID==movie.id">
+              <h5>{{ movie.title }}</h5>
+              <p>{{ movie.year }}</p>
             </div>
           </div>
+        </div>
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#topRatingIndicator"
           data-bs-slide="prev">
