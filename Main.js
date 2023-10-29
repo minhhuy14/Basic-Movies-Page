@@ -61,7 +61,7 @@ export default{
         class="carousel-item top-movies-item"
         :class="{ active: index === 0 }"
         @click=showDetailMovie(movie.id)>
-        <img :src="movie.image" class="d-block top-movies-img" alt="...">
+        <img :src="movie.image" class="d-block top-movies-img" alt="">
         <div class="carousel-caption d-none d-md-block top-movies-caption">
           <h5>{{ movie.title }}</h5>
           <p>{{ movie.year }}</p>
@@ -91,7 +91,7 @@ export default{
           :class="{ active: index === 0 }">
           <div class="movie-item-box">
           <div v-for="movie in group" class="item-movie">
-              <img :src="movie.image" class="d-block movies-styles zoom-onhover" alt="..."
+              <img :src="movie.image" class="d-block movies-styles zoom-onhover" alt=""
               @click=showDetailMovie(movie.id) @mouseover="onHover(movie.id)" @mouseleave="onHover(null)">
               <div class="d-none d-md-block popular-movies-caption" v-if="this.hoveredID==movie.id">
                   <h5>{{ movie.title }}</h5>
@@ -126,7 +126,7 @@ export default{
           :class="{ active: index === 0 }">
           <div class="movie-item-box">
           <div v-for="movie in group" class="item-movie">
-            <img :src="movie.image" class="d-block movies-styles zoom-onhover" alt="..."
+            <img :src="movie.image" class="d-block movies-styles zoom-onhover" alt=""
             @click=showDetailMovie(movie.id) @mouseover="onHover(movie.id)" @mouseleave="onHover(null)">
             <div class="d-none d-md-block popular-movies-caption" v-if="this.hoveredID==movie.id">
               <h5>{{ movie.title }}</h5>

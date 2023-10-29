@@ -1,14 +1,18 @@
 
 export default{
     name: 'DetailMovieInfo',
-    props: ['selectedMovie'],
+    props: ['selectedMovie','selectedActor','showDetailActor'],
     data()
     {
         return {
-           
+           clickedActor:null
         }
     },
-
+    methods:{
+        onClickedActor(idActor){
+            clickedActor = idActor;
+        }
+    },
     created(){
         console.log('Selected Movie:');
 
@@ -18,36 +22,36 @@ export default{
     template:`
             <div class="main-movie-content">
             <img :src = this.selectedMovie.item.image class="detail-img">
-            <div class="detail-content">
-            <h3> {{this.selectedMovie.item.title}} </h3><br>
-            <h5>Full Titile: {{this.selectedMovie.item.fullTitle}}</h5>
-            <h5>Public year: {{this.selectedMovie.item.year}}</h5>
-            <h5>List Directors:</h5>
-            <table class="table table-bordered border-primary">
-                    <thead class="table-dark">
-                        <tr>
-                            <th>ID</th>
-                            <th>Name</th>
-                        </tr>
-                    </thead>
-                    <tbody class="table-striped">
-                        <tr v-for="person in this.selectedMovie.item.directorList">
-                            <th scope="row">{{ person.id }}</th>
-                            <td>{{ person.name }}</td>
-                        </tr>
-                    </tbody>
-            </table>
-            <h5>Plot</h5>
-            <p>{{this.selectedMovie.item.plot}}</p>
-            <div class="actor-box">
-            <h5>Genres</h5>
-            <li v-for="it in this.selectedMovie.item.genreList">{{it.value}}</li>
-            </div>
+                <div class="detail-content">
+                <h3> {{this.selectedMovie.item.title}} </h3><br>
+                <h5>Full Titile: {{this.selectedMovie.item.fullTitle}}</h5>
+                <h5>Release year: {{this.selectedMovie.item.year}}</h5>
+                <h5>List Directors:</h5>
+                <table class="table table-bordered border-secondary table-hover">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                            </tr>
+                        </thead>
+                        <tbody class="table-striped">
+                            <tr v-for="person in this.selectedMovie.item.directorList">
+                                <th scope="row">{{ person.id }}</th>
+                                <td>{{ person.name }}</td>
+                            </tr>
+                        </tbody>
+                </table>
+                <h5>Plot</h5>
+                <p>{{this.selectedMovie.item.plot}}</p>
+                <div class="actor-box">
+                <h5>Genres</h5>
+                <li v-for="it in this.selectedMovie.item.genreList">{{it.value}}</li>
+                </div>
             </div>
             </div>
             <div class="addtion-content">
             <h5>Actor List</h5>
-            <table class="table table-bordered border-primary">
+            <table class="table table-bordered border-secondary table-hover">
             <thead class="table-dark">
                 <tr>
                     <th>ID</th>
@@ -56,15 +60,16 @@ export default{
                 </tr>
             </thead>
             <tbody class="table-striped">
-                <tr v-for="person in this.selectedMovie.item.actorList">
+                <tr v-for="person in this.selectedMovie.item.actorList"
+                    @click=this.showDetailActor(person.id)>
                     <th scope="row">{{ person.id }}</th>
-                    <td>{{ person.name }}</td>
+                    <td> <a class="actor-link">{{ person.name }}</a></td>
                     <td>{{ person.asCharacter }}</td>
                 </tr>
             </tbody>
            </table>
            <h5>Review Infomation</h5>
-            <table class="table table-bordered border-primary">
+            <table class="table table-bordered border-secondary">
             <thead class="table-dark">
                 <tr>
                     <th>Username</th>
