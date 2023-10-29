@@ -96,7 +96,7 @@ export default{
               <div class="d-none d-md-block popular-movies-caption" v-if="this.hoveredID==movie.id">
                   <h5>{{ movie.title }}</h5>
                   <p>{{ movie.year }}</p>
-              /div>
+              </div>
           </div>
           </div>
         </div>

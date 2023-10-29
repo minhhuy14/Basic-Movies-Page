@@ -7,6 +7,8 @@ import DetailMovieInfo from './DetailMovieInfo.js';
 
 import DetailActorInfo from './DetailActorInfo.js';
 
+import SearchInfo from './SearchInfo.js';
+
 import Movies from './db/data.js';
 
 import {fetch} from './dbProvider.js';
@@ -18,6 +20,8 @@ export default {
             selectedMovie:null,
             selectedActor:null,
             isLoading: false,
+            searchResults:[],
+            isSearching:false,
         };
     },
    
@@ -27,12 +31,13 @@ export default {
         Main,
         DetailMovieInfo,
         DetailActorInfo,
+        SearchInfo,
         Footer,
     },
     methods:{
         showData: function() {
                         console.log(Movies);
-                        const result=fetch('detail/movie/tt0099685');
+                        const result=fetch('search/movie/the?per_page=6&page=1');
         },
         showDetailMovie(movieId){
             console.log('Show detail:');
@@ -63,18 +68,32 @@ export default {
             );
 
         },
+        search(query){
+            this.isLoading=true;
+            this.isSearching=true;
+            console.log('Query là: '+query);
+            fetch(`search/movie/${query}?per_page=6&page=1`)
+            .then(results =>{
+             console.log('Research là: ');
+                console.log(results);
+                this.searchResults= results.items;
+                console.log(this.searchResults);
+                this.isLoading=false;
+            });
+        }
     },
     created(){
         this.showData();
     },
     template:`
         <Header/>
-        <Nav @goHome="selectedMovie=null,selectedActor=null"/>
+        <Nav @goHome="selectedMovie=null,selectedActor=null" @search="search"/>
         <div v-if="isLoading">Loading Infomation...</div>
         <div v-else>
-            <Main v-if="!selectedMovie&&!selectedActor" :showDetailMovie="showDetailMovie"/>
+            <Main v-if="!selectedMovie&&!selectedActor&&!isSearching" :showDetailMovie="showDetailMovie"/>
             <DetailMovieInfo :selectedMovie="selectedMovie" :showDetailActor="showDetailActor" v-if="selectedMovie&&!selectedActor"/>
             <DetailActorInfo :selectedActor="selectedActor" v-if="selectedActor"/>
+            <SearchInfo :searchResults="searchResults"  v-if="isSearching"/> 
         </div>
         <Footer/>
     `

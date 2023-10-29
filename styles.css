@@ -58,9 +58,6 @@ body{
     margin-top: 10px;
 }
 
-.top-movies-item{
-      
-}
 .top-movies-img{
    width: 400px;
     margin: 0 auto;
@@ -150,4 +147,16 @@ body{
     cursor:pointer;
     color: blue;
     text-decoration: dashed;
+}
+
+
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-arround;
+}
+.card {
+    flex: 0 0 20%;
+    margin-bottom: 20px;
+    margin-right: 30px;
 }
