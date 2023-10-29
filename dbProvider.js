@@ -77,11 +77,10 @@ export function fetch(queryInfo) {
                                 }
 
                             }
-                            if (!found)
-                            {
+                        }
+                        if (!found)
+                        {
                                 reject(new Error('Actor not found'));
-                            }
-                            
                         }
                     }
                     objResult.total_page =Math.floor( objResult.total / objResult.per_page) + ((objResult.total % objResult.per_page) == 0 ? 0 : 1);
