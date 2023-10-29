@@ -9,7 +9,8 @@ export default{
           mostPopularMovies:[],
           top15PopularMovies:[],
           top50Movies:[],
-          top15RatingMovies:[]
+          top15RatingMovies:[],
+          hoveredID:-1,
         };
     },
     methods:{
@@ -17,7 +18,10 @@ export default{
         return Array.from({ length: Math.ceil(array.length / size) }, (v, i) =>
             array.slice(i * size, i * size + size)
         );
-    },
+      },
+      onHover(id){
+        this.hoveredID= id
+      }
     },
     created()
     {
@@ -88,8 +92,10 @@ export default{
           <div class="movie-item-box">
           <div v-for="movie in group">
               <img :src="movie.image" class="d-block movies-styles zoom-onhover" alt="..."
-              @click=showDetailMovie(movie.id)>
-          </div>
+              @click=showDetailMovie(movie.id) @mouseover="onHover(movie.id)" @mouseleave="onHover(null)">
+              <div class="d-none d-md-block popular-movies-caption" v-if="this.hoveredID==movie.id">
+                  <h5>{{ movie.title }}</h5>
+                  <p>{{ movie.year }}</p>
           </div>
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#popularIndicator"

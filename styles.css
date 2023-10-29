@@ -98,7 +98,7 @@ body{
 }
 
 .zoom-onhover:hover{
-    transform: scale(1.5); 
+    transform: scale(2); 
 }
 
 .detail-info{
@@ -127,3 +127,7 @@ body{
 }
 
 
+.popular-movies-caption{
+    z-index: 10;
+    color: #fff !important;
+}
