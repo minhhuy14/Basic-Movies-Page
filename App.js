@@ -25,7 +25,7 @@ export default {
                         console.log(Movies);
                         const result=fetch('get/top50/?per_page=15&page=1');
                         console.log('Result ');
-                        console.log(result);
+                        console.log(result.get);
                     }
         },
 
