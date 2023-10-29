@@ -20,9 +20,6 @@ export default {
         DBProvider
     },
     methods:{
-        showData(){
-            console.log(DBProvider.Movies);
-        }
     },
     template:`
         <Header/>

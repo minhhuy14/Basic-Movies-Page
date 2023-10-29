@@ -169,13 +169,18 @@ export default {
                     }
                     }
                     else if (classInfo=='topboxoffice'){
-
+                        this.sortByRevenue(Movies.Movies);
+                        for (let i=0;i<10;i++)
+                        {   
+                            objResult.items.push(Movies.Movies[i]);
+                            objResult.total += 1;
+                        }
                     }
                     objResult.total_page =Math.floor( objResult.total / objResult.per_page) + ((objResult.total % objResult.per_page) == 0 ? 0 : 1);
                     console.log(objResult);
-                    resolve(objResult); // Resolve the promise with the result
+                    resolve(objResult); 
                 } catch (error) {
-                    reject(error); // Reject the promise with the error
+                    reject(error); 
                 }
                 
             }
@@ -184,10 +189,18 @@ export default {
 
         showData: function() {
             console.log(Movies);
-            this.fetch('detail/movie/tt0015864');
+            const result=this.fetch('get/topboxoffice/?per_page=15&page=1');
+            console.log('Result ');
+            console.log(result);
+        },
+        sortByRevenue: function(list){
+            list.sort((a, b) => {
+                const grossA = a.boxOffice.cumulativeWorldwideGross ? parseInt(a.boxOffice.cumulativeWorldwideGross.replace('$', '').replace(/,/g, '')) : a.boxOffice.grossUSA ? parseInt(a.boxOffice.grossUSA.replace('$', '').replace(/,/g, '')) : 0;
+                const grossB = b.boxOffice.cumulativeWorldwideGross ? parseInt(b.boxOffice.cumulativeWorldwideGross.replace('$', '').replace(/,/g, '')) : b.boxOffice.grossUSA ? parseInt(b.boxOffice.grossUSA.replace('$', '').replace(/,/g, '')) : 0;
+                return grossB - grossA;
+            })
         }
     },
-
     template: `
     <button type = "button" @click = "showData">Click me</button>
     `,
