@@ -36,7 +36,7 @@ export default{
           .then(popularresult =>{
               this.mostPopularMovies=popularresult.items;
               this.top15PopularMovies=this.mostPopularMovies.slice(0,15);
-              console.log('Popular: ');
+              console.log('Top Popular: ');
               console.log(this.top15PopularMovies);
           });
           fetch('get/top50/?per_page=3&page=1')

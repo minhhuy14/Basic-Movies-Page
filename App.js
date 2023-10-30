@@ -9,8 +9,6 @@ import DetailActorInfo from './DetailActorInfo.js';
 
 import SearchInfo from './SearchInfo.js';
 
-import Movies from './db/data.js';
-
 import {fetch} from './dbProvider.js';
 
 export default {
@@ -37,10 +35,6 @@ export default {
         Footer,
     },
     methods:{
-        showData: function() {
-                        console.log(Movies);
-                        const result=fetch('search/movie/the?per_page=6&page=1');
-        },
         showDetailMovie(movieId){
             console.log('Show detail:');
             console.log(movieId);
@@ -80,8 +74,10 @@ export default {
         async search(query) {
             this.isLoading = true;
             this.isSearching = true;
-            console.log('Query là: ' + query);
-        
+            this.selectedMovie = null;
+            this.selectedActor = null;
+            this.searchResults = []; 
+            this.notFound = false;
             try {
                 const movieResults = await fetch(`search/movie/${query}?per_page=6&page=1`);
                 console.log('Movie results:', movieResults);
@@ -112,18 +108,16 @@ export default {
     
            
         }},
-    created(){
-        this.showData();
-    },
     template:`
         <Header/>
         <Nav @goHome="selectedMovie=null,selectedActor=null,isSearching=false" @search="search"/>
         <div v-if="isLoading">Loading Infomation...</div>
         <div v-else>
-            <Main v-if="!selectedMovie&&!selectedActor&&!isSearching" :showDetailMovie="showDetailMovie"/>
             <DetailMovieInfo :selectedMovie="selectedMovie" :showDetailActor="showDetailActor" v-if="selectedMovie&&!selectedActor"/>
-            <DetailActorInfo :selectedActor="selectedActor" v-if="selectedActor"/>
-            <SearchInfo v-if="isSearching" :searchResults="searchResults" :notFound="notFound" :showDetailMovie="showDetailMovie"/> 
+            <DetailActorInfo :selectedActor="selectedActor" v-else-if="selectedActor"/>
+            <SearchInfo v-else-if="isSearching" :searchResults="searchResults" :notFound="notFound" :showDetailMovie="showDetailMovie"/> 
+
+            <Main v-else :showDetailMovie="showDetailMovie"/>
         </div>
         <Footer/>
     `

@@ -16,22 +16,16 @@ export default{
             this.isLoading = false;
         },
     },
-    created(){
-        console.log('Selected Movie:');
-
-        console.log(this.selectedMovie);
-        
-    },
     template:`
             <div v-if="isLoading">Loading Information...</div>
             <div v-else class="main-movie-content">
-            <img :src = this.selectedMovie.item.image class="detail-img">
+                <img :src = this.selectedMovie.item.image class="detail-img">
                 <div class="detail-content">
                 <h3> {{this.selectedMovie.item.title}} </h3><br>
                 <h5>Full Titile: {{this.selectedMovie.item.fullTitle}}</h5>
                 <h5>Release year: {{this.selectedMovie.item.year}}</h5>
                 <h5>List Directors:</h5>
-                <table class="table table-bordered border-secondary table-hover">
+                <table class="table table-bordered border-secondary table-striped">
                         <thead class="table-dark">
                             <tr>
                                 <th>ID</th>
@@ -39,7 +33,7 @@ export default{
                             </tr>
                         </thead>
                         <tbody class="table-striped">
-                            <tr v-for="person in this.selectedMovie.item.directorList">
+                            <tr v-for="person in selectedMovie.item.directorList">
                                 <th scope="row">{{ person.id }}</th>
                                 <td>{{ person.name }}</td>
                             </tr>
@@ -55,7 +49,7 @@ export default{
             </div>
             <div class="addtion-content">
             <h5>Actor List</h5>
-            <table class="table table-bordered border-secondary table-hover">
+            <table class="table table-bordered border-secondary table-hover table-striped">
             <thead class="table-dark">
                 <tr>
                     <th>ID</th>
@@ -64,16 +58,17 @@ export default{
                 </tr>
             </thead>
             <tbody class="table-striped">
-                <tr v-for="person in this.selectedMovie.item.actorList"
-                    @click=this.showDetailActor(person.id)>
+                <tr v-for="person in selectedMovie.item.actorList"
+                    @click=showDetailActor(person.id) >
                     <th scope="row">{{ person.id }}</th>
                     <td> <a class="actor-link">{{ person.name }}</a></td>
                     <td>{{ person.asCharacter }}</td>
                 </tr>
             </tbody>
            </table>
+           </div>
            <h5>Review Infomation</h5>
-            <table class="table table-bordered border-secondary">
+            <table class="table table-bordered border-secondary table-striped">
             <thead class="table-dark">
                 <tr>
                     <th>Username</th>
@@ -94,9 +89,8 @@ export default{
                 </tr>
             </tbody>
            </table>
-        </div>
-        </div>
-        </div>
-    `
+        `
+
+
 
 }

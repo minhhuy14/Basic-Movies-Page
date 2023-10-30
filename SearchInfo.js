@@ -8,12 +8,8 @@ export default{
         }
     },
 
-    methods:{
-        
-       
-    },
     mounted() {
-        console.log('SearchInfo component has been mounted');
+        console.log('SearchInfo component mounted');
     },
     template:`
     <div class="card-container">
@@ -29,6 +25,7 @@ export default{
         </div>   
         </div>
         <div v-if="notFound" class="no-results">
+            <h2>Error: 404!</h2>
             <h2>No results found</h2>
         </div>
     </div>

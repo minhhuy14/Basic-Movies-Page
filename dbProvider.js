@@ -41,6 +41,7 @@ export function fetch(queryInfo) {
                     total: 0,
                     items:[]
                 };
+                let uniqueItems=new Set();
 
                 try {
                     if (classInfo=='movie')
@@ -51,9 +52,13 @@ export function fetch(queryInfo) {
                             let movie=Movies.Movies[i];
                             if (movie.fullTitle.toLowerCase().search(pattern)!=-1)
                             {
-                                objResult.items.push(movie);
-                                objResult.total+=1;
-                                found=true;
+                                if (!uniqueItems.has(movie.id)){
+                                    uniqueItems.add(movie.id);
+                                    objResult.items.push(movie);
+                                    objResult.total+=1;
+                                    found=true;
+                                }
+                                
                             } 
                         }
                         if (!found)
@@ -71,9 +76,12 @@ export function fetch(queryInfo) {
                             {
                                 if (movie.actorList[j].name.toLowerCase().search(pattern)!=-1)
                                 {
-                                    objResult.items.push(movie);
-                                    objResult.total+=1;
-                                    found=true;
+                                    if (!uniqueItems.has(movie.id)) {
+                                        uniqueItems.add(movie.id);
+                                        objResult.items.push(movie);
+                                        objResult.total+=1;
+                                        found=true;
+                                    }
                                 }
 
                             }
@@ -146,8 +154,6 @@ export function fetch(queryInfo) {
                                 break;
                             }
                         }
-                    console.log('Get reviews: ');
-                    console.log(objResult);
 
                     }
                     if (classInfo=='name')
@@ -227,8 +233,3 @@ export function sortByRevenue(list){
                 return grossB - grossA;
             })
         }
-//     },
-//     template: `
-//     <button type = "button" @click = "showData">Click me</button>
-//     `,
-// };
