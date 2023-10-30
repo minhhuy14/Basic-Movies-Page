@@ -1,16 +1,7 @@
 export default{
     name: 'SearchInfo',
     props:['searchResults','notFound','showDetailMovie'],
-    data()
-    {
-        return {
-           
-        }
-    },
-
-    mounted() {
-        console.log('SearchInfo component mounted');
-    },
+    
     template:`
     <div class="card-container">
         <div v-for="movie in searchResults" 

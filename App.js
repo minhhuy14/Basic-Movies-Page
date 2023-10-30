@@ -35,8 +35,6 @@ export default {
     },
     methods:{
         showDetailMovie(movieId){
-            console.log('Show detail:');
-            console.log(movieId);
            fetch(`detail/movie/${movieId}`)
            .then(
                 mv => {
@@ -49,15 +47,12 @@ export default {
 
         },
         showDetailActor(actorId){
-            console.log('Show detail Actor:');
-            console.log(actorId);
+            console.log('Show detail Actor '+actorId);
            fetch(`detail/name/${actorId}`)
            .then(
                
                 actor=> {
                     this.selectedActor=actor.item;
-                    console.log('Actorr');
-                    console.log(actor);
                 }
             )
             .catch(() => {
@@ -92,9 +87,8 @@ export default {
                 }
             }
                
-            console.log('Số lượng kết quả trả về: '+this.searchResults.length);
+            console.log('Số lượng kết quả tìm kiếm: '+this.searchResults.length);
     
-           
         }},
     template:`
         <Header/>

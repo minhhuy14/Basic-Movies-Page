@@ -81,7 +81,6 @@ export default{
                     <td>{{ rv.date }}</td>
                     <td>{{ rv.content }}</td>
                     <td>{{ rv.rate }}</td>
-
                 </tr>
             </tbody>
            </table>

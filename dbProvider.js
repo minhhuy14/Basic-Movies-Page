@@ -91,7 +91,6 @@ export function fetch(queryInfo) {
                                         found=true;
                                     }
                                 }
-
                             }
                         }
                         if (!found)
