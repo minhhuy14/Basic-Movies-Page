@@ -6,19 +6,15 @@ export default{
     {
         return {
            clickedActor:null,
-           isLoading:false,
         }
     },
     methods:{
         onClickedActor(idActor){
-            this.isLoading = true;
             clickedActor = idActor;
-            this.isLoading = false;
         },
     },
     template:`
-            <div v-if="isLoading">Loading Information...</div>
-            <div v-else class="main-movie-content">
+            <div class="main-movie-content">
                 <img :src = this.selectedMovie.item.image class="detail-img">
                 <div class="detail-content">
                 <h3> {{this.selectedMovie.item.title}} </h3><br>
@@ -90,7 +86,4 @@ export default{
             </tbody>
            </table>
         `
-
-
-
 }

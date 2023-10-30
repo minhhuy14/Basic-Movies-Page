@@ -24,7 +24,7 @@ export default{
       }
     },
     created()
-    {
+    {   
         fetch('get/topboxoffice/?per_page=5&page=1')
           .then(result =>{
               this.topBoxOfficeMovies=result.items;

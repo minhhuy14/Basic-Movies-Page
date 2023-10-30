@@ -1,17 +1,20 @@
 
 import Movies from './db/data.js';
 
-// Define the DB provider module
+// Định nghĩa method fetch
 export function fetch(queryInfo) {
-            return new Promise((resolve, reject) => {
+            
+        return new Promise((resolve, reject) => {
             
             console.log(queryInfo);
             const str = queryInfo.toLowerCase().split('/');
+
             const typeInfo=str[0];
             const classInfo=str[1];
             let pattern='';
             let perpage;
             let page;
+
             if (typeInfo!='detail')
             {
                 const rest=str[2].split('?');
@@ -31,6 +34,8 @@ export function fetch(queryInfo) {
 
             let objResult={
             };
+
+            //Xử lý nếu queryInfo có type='search'
             if (typeInfo=='search')
             {
                 objResult = {
@@ -41,7 +46,10 @@ export function fetch(queryInfo) {
                     total: 0,
                     items:[]
                 };
-                let uniqueItems=new Set();
+
+                
+                let uniqueItems=new Set();  
+                //Dùng cấu trúc dữ liệu Set để kiểm tra các movies trùng lặp khi tìm kiếm trước khi push vào mảng items của objResult
 
                 try {
                     if (classInfo=='movie')
@@ -52,7 +60,7 @@ export function fetch(queryInfo) {
                             let movie=Movies.Movies[i];
                             if (movie.fullTitle.toLowerCase().search(pattern)!=-1)
                             {
-                                if (!uniqueItems.has(movie.id)){
+                                if (!uniqueItems.has(movie.id)){    //Nếu trong set chưa có movie.id thì mới push vào aray items
                                     uniqueItems.add(movie.id);
                                     objResult.items.push(movie);
                                     objResult.total+=1;
@@ -99,6 +107,7 @@ export function fetch(queryInfo) {
                 }
             }
 
+            //Xử lý nếu queryInfo có type='detail'
             if (typeInfo=='detail'){
                 objResult = {
                     id:pattern,
@@ -175,7 +184,7 @@ export function fetch(queryInfo) {
                 }
                 
             }
-
+            //Xử lý nếu queryInfo có type='get'
             if (typeInfo=='get'){
                 objResult={
                 [typeInfo]:classInfo,
@@ -225,11 +234,11 @@ export function fetch(queryInfo) {
             })
         }
 
-//         
+//Hàm sắp xếp movies theo doanh thu dể chọn ra các movies có doanh thu cao nhất
 export function sortByRevenue(list){
             list.sort((a, b) => {
                 const grossA = a.boxOffice.cumulativeWorldwideGross ? parseInt(a.boxOffice.cumulativeWorldwideGross.replace('$', '').replace(/,/g, '')) : a.boxOffice.grossUSA ? parseInt(a.boxOffice.grossUSA.replace('$', '').replace(/,/g, '')) : 0;
                 const grossB = b.boxOffice.cumulativeWorldwideGross ? parseInt(b.boxOffice.cumulativeWorldwideGross.replace('$', '').replace(/,/g, '')) : b.boxOffice.grossUSA ? parseInt(b.boxOffice.grossUSA.replace('$', '').replace(/,/g, '')) : 0;
                 return grossB - grossA;
             })
-        }
+    }   

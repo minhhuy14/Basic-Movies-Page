@@ -1,12 +1,7 @@
 export default{
     name: 'DetailActorInfo',
     props: ['selectedActor'],
-    data()
-    {
-        return {
-           
-        }
-    },
+    
     template:`
         <div v-if="selectedActor.birthDate!=null">
         <div class="main-movie-content">
@@ -39,10 +34,7 @@ export default{
         </div>
         </div>
         <div v-else class="no-results">
-            <h2>Can't find the information of this Actor from the database</h2>
+            <h2>Can not find more information about this Actor from the database</h2>
         </div>
-
-        
     `
-
 }

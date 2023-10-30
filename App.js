@@ -17,7 +17,6 @@ export default {
         return {
             selectedMovie:null,
             selectedActor:null,
-            isLoading: false,
             searchResults:[],
             isSearching:false,
             notFound:false,
@@ -38,24 +37,20 @@ export default {
         showDetailMovie(movieId){
             console.log('Show detail:');
             console.log(movieId);
-            this.isLoading = true;
            fetch(`detail/movie/${movieId}`)
            .then(
                 mv => {
                     this.selectedMovie=mv;
-                    this.isLoading = false;
                 }
             ) 
             .catch(() => {
 
-                this.isLoading=false;
             });
 
         },
         showDetailActor(actorId){
             console.log('Show detail Actor:');
             console.log(actorId);
-            this.isLoading = true;
            fetch(`detail/name/${actorId}`)
            .then(
                
@@ -63,16 +58,14 @@ export default {
                     this.selectedActor=actor.item;
                     console.log('Actorr');
                     console.log(actor);
-                    this.isLoading = false;
                 }
             )
             .catch(() => {
-                this.isLoading=false;
+
             });
 
         },
         async search(query) {
-            this.isLoading = true;
             this.isSearching = true;
             this.selectedMovie = null;
             this.selectedActor = null;
@@ -83,9 +76,7 @@ export default {
                 console.log('Movie results:', movieResults);
                 this.searchResults = movieResults.items;
             }
-            catch(e){
-
-            };
+            catch(e){};
 
             try{
                 const nameResults = await fetch(`search/name/${query}?per_page=6&page=1`);
@@ -100,25 +91,18 @@ export default {
                     this.notFound = true;
                 }
             }
-             finally {
-                this.isLoading = false;
-             }
                
-            console.log(this.searchResults.length);
+            console.log('Số lượng kết quả trả về: '+this.searchResults.length);
     
            
         }},
     template:`
         <Header/>
         <Nav @goHome="selectedMovie=null,selectedActor=null,isSearching=false" @search="search"/>
-        <div v-if="isLoading">Loading Infomation...</div>
-        <div v-else>
             <DetailMovieInfo :selectedMovie="selectedMovie" :showDetailActor="showDetailActor" v-if="selectedMovie&&!selectedActor"/>
             <DetailActorInfo :selectedActor="selectedActor" v-else-if="selectedActor"/>
             <SearchInfo v-else-if="isSearching" :searchResults="searchResults" :notFound="notFound" :showDetailMovie="showDetailMovie"/> 
-
             <Main v-else :showDetailMovie="showDetailMovie"/>
-        </div>
         <Footer/>
     `
 }
